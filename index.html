@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>لعبة العربية القتالية</title>
+  <style>
+    body {
+      background: #1a1a1a;
+      color: #fff;
+      font-family: sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    .car {
+      margin: 20px auto;
+      padding: 20px;
+      border: 2px solid #444;
+      border-radius: 10px;
+      background: #222;
+      width: 300px;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .drive { background: #0a84ff; color: white; }
+    .fire { background: #ff3b30; color: white; }
+    .refuel { background: #30d158; color: white; }
+  </style>
+</head>
+<body>
+  <h1>🚗🔥 لعبة العربية القتالية</h1>
+  <div class="car">
+    <h2>PharaohX</h2>
+    <p>الوقود: <span id="fuel">100</span>%</p>
+    <p>رصاص: <span id="ammo">100</span></p>
+    <p>صواريخ: <span id="rockets">2</span></p>
+
+    <!-- أزرار التحكم في العربية -->
+    <button class="drive" onclick="drive()">سُق</button>
+    <button class="fire" onclick="fireGun()">🔫 اضرب رصاص</button>
+    <button class="fire" onclick="fireRocket()">🚀 اضرب صاروخ</button>
+    <button class="refuel" onclick="refuel()">⛽ زوّد بنزين</button>
+
+    <!-- سجل الأحداث -->
+    <div id="log"></div>
+  </div>
+
+  <script>
+    // القيم الأولية للموارد
+    let fuel = 100;
+    let ammo = 100;
+    let rockets = 2;
+
+    // تسجيل الأحداث في صندوق العرض
+    function log(msg) {
+      const logDiv = document.getElementById("log");
+      const p = document.createElement("p");
+      p.textContent = msg;
+      logDiv.prepend(p); // إضافة الرسالة في أعلى السجل
+    }
+
+    // تحديث عناصر الواجهة بعد كل إجراء
+    function updateUI() {
+      document.getElementById("fuel").textContent = fuel;
+      document.getElementById("ammo").textContent = ammo;
+      document.getElementById("rockets").textContent = rockets;
+    }
+
+    // قيادة العربية تقلل الوقود بمقدار 10، وتُظهر رسالة حسب الحالة
+    function drive() {
+      if (fuel >= 10) {
+        fuel -= 10;
+        log("🚗 العربية مشيت 10 كم.");
+      } else {
+        log("❌ مفيش بنزين كفاية!");
+      }
+      updateUI();
+    }
+
+    // إطلاق الرصاص يستهلك 10 وحدات من الرصاص، إن وُجد
+    function fireGun() {
+      if (ammo > 0) {
+        ammo -= 10;
+        log("🔫 تم إطلاق الرصاص!");
+      } else {
+        log("❌ مفيش رصاص!");
+      }
+      updateUI();
+    }
+
+    // إطلاق صاروخ يستهلك واحد من عدد الصواريخ، إن وُجد
+    function fireRocket() {
+      if (rockets > 0) {
+        rockets--;
+        log("🚀 صاروخ انطلق! بوم!");
+      } else {
+        log("❌ مفيش صواريخ!");
+      }
+      updateUI();
+    }
+
+    // إعادة تعبئة البنزين إلى 100%
+    function refuel() {
+      fuel = 100;
+      log("⛽ تم تزويد العربية بالبنزين.");
+      updateUI();
+    }
+  </script>
+</body>
+</html>
